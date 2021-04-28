@@ -1,4 +1,4 @@
-<h1 align="center">Selamat datang di Learnify! 👋</h1>
+<!-- <h1 align="center">Selamat datang di Learnify! 👋</h1>
 
 ![Learnify](https://user-images.githubusercontent.com/46257169/83959623-f946de80-a876-11ea-88db-f677be8f22e7.png)
 
@@ -93,4 +93,4 @@ Jangan ragu untuk memeriksa halaman masalah jika Anda ingin berkontribusi. **Ber
 https://pastebin.pl/view/c3608c25
 
 ------------
-**Made with ❤️ SYAUQIZAIDAN KHAIRAN KHALAF**
+**Made with ❤️ SYAUQIZAIDAN KHAIRAN KHALAF** -->
