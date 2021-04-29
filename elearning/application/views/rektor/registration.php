@@ -7,7 +7,7 @@
         <div class="">
             <div class="card" style="width:100%;">
                 <div class="card-body">
-                    <h2 class="card-title" style="color: black;">Tambah Data Guru</h2>
+                    <h2 class="card-title" style="color: black;">Tambah Data rektor</h2>
                     <hr>
                     <p class="card-text"> After I ran into Helen at a restaurant, I realized she was just office pretty drop-dead date put in in a deck for our standup today. Who's responsible for the ask for this request? who's responsible for the ask for this request? but moving the goalposts gain traction.
                     </p>
@@ -20,14 +20,14 @@
         <div id="detail" class="card card-success">
             <div class="col-md-12 text-center">
                 <p class="registration-title font-weight-bold display-4 mt-4" style="color:black; font-size: 50px;">
-                    Pendaftaran Guru</p>
+                    Pendaftaran rektor</p>
                 <p style="line-height:-30px;margin-top:-20px;">Silahkan isi data data yang diperlukan
                     dibawah </p>
                 <hr>
             </div>
 
             <div class="card-body">
-                <form method="POST" action="<?= base_url('admin/add_guru') ?>">
+                <form method="POST" action="<?= base_url('admin/add_rektor') ?>">
                     <div id="" class="form-group">
                         <label for="nip">Nomor Induk Pegawai</label>
                         <input id="nip" type="text" class="form-control" name="nip">
@@ -105,5 +105,4 @@
 </div>
 </div>
 <!-- End Main Content -->
-
 <?php $this->load->view('admin/template/footer'); ?>

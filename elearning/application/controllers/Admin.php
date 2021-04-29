@@ -16,25 +16,25 @@ class Admin extends CI_Controller
     public function index()
     {
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
-        $this->load->view('admin/index');
+        $this->load->view('admin/dashboard');
     }
 
     public function about_developer()
     {
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
-        $this->load->view('admin/about_developer');
+        $this->load->view('admin/tentang/about_developer');
     }
 
     public function about_learnify()
     {
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
-        $this->load->view('admin/about_learnify');
+        $this->load->view('admin/tentang/about_learnify');
     }
 
     // Management Siswa
@@ -44,10 +44,10 @@ class Admin extends CI_Controller
         $this->load->model('m_siswa');
 
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
         $data['user'] = $this->m_siswa->tampil_data()->result();
-        $this->load->view('admin/data_siswa', $data);
+        $this->load->view('admin/siswa/data_siswa', $data);
     }
 
     public function detail_siswa($id)
@@ -56,7 +56,7 @@ class Admin extends CI_Controller
         $where = array('id' => $id);
         $detail = $this->m_siswa->detail_siswa($id);
         $data['detail'] = $detail;
-        $this->load->view('admin/detail_siswa', $data);
+        $this->load->view('admin/siswa/detail_siswa', $data);
     }
 
     public function update_siswa($id)
@@ -64,7 +64,7 @@ class Admin extends CI_Controller
         $this->load->model('m_siswa');
         $where = array('id' => $id);
         $data['user'] = $this->m_siswa->update_siswa($where, 'siswa')->result();
-        $this->load->view('admin/update_siswa', $data);
+        $this->load->view('admin/siswa/update_siswa', $data);
     }
 
     public function user_edit()
@@ -104,7 +104,7 @@ class Admin extends CI_Controller
 
         $this->m_siswa->update_data($where, $data, 'siswa');
         $this->session->set_flashdata('success-edit', 'berhasil');
-        redirect('admin/data_siswa');
+        redirect('admin/siswa/data_siswa');
     }
 
     public function delete_siswa($id)
@@ -113,7 +113,7 @@ class Admin extends CI_Controller
         $where = array('id' => $id);
         $this->m_siswa->delete_siswa($where, 'siswa');
         $this->session->set_flashdata('user-delete', 'berhasil');
-        redirect('admin/data_siswa');
+        redirect('admin/siswa/data_siswa');
     }
 
     // manajemen guru
@@ -122,10 +122,10 @@ class Admin extends CI_Controller
     {
         $this->load->model('m_guru');
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
         $data['user'] = $this->m_guru->tampil_data()->result();
-        $this->load->view('admin/data_guru', $data);
+        $this->load->view('admin/guru/data_guru', $data);
     }
 
     public function detail_guru($nip)
@@ -134,7 +134,7 @@ class Admin extends CI_Controller
         $where = array('nip' => $nip);
         $detail = $this->m_guru->detail_guru($nip);
         $data['detail'] = $detail;
-        $this->load->view('admin/detail_guru', $data);
+        $this->load->view('admin/guru/detail_guru', $data);
     }
 
     public function update_guru($nip)
@@ -142,7 +142,7 @@ class Admin extends CI_Controller
         $this->load->model('m_guru');
         $where = array('nip' => $nip);
         $data['user'] = $this->m_guru->update_guru($where, 'guru')->result();
-        $this->load->view('admin/update_guru', $data);
+        $this->load->view('admin/guru/update_guru', $data);
     }
 
     public function guru_edit()
@@ -165,51 +165,8 @@ class Admin extends CI_Controller
 
         $this->m_guru->update_data($where, $data, 'guru');
         $this->session->set_flashdata('success-edit', 'berhasil');
-        redirect('admin/data_guru');
+        redirect('admin/guru/data_guru');
     }
-
-    public function update_materi($id)
-    {
-        $this->load->model('m_materi');
-        $where = array('id' => $id);
-        $data['user'] = $this->m_materi->update_materi($where, 'materi')->result();
-        $this->load->view('admin/update_materi', $data);
-    }
-
-    public function materi_edit()
-    {
-        $this->load->model('m_materi');
-
-        $id = $this->input->post('id');
-        $nama_guru = $this->input->post('nama_guru');
-        $nama_mapel = $this->input->post('nama_mapel');
-        $deskripsi = $this->input->post('deskripsi');
-
-        $data = array(
-            'nama_guru' => $nama_guru,
-            'nama_mapel' => $nama_mapel,
-            'deskripsi' => $deskripsi,
-
-        );
-
-        $where = array(
-            'id' => $id,
-        );
-
-        $this->m_materi->update_data($where, $data, 'materi');
-        $this->session->set_flashdata('success-edit', 'berhasil');
-        redirect('admin/data_materi');
-    }
-
-    public function delete_guru($nip)
-    {
-        $this->load->model('m_guru');
-        $where = array('nip' => $nip);
-        $this->m_guru->delete_guru($where, 'guru');
-        $this->session->set_flashdata('user-delete', 'berhasil');
-        redirect('admin/data_guru');
-    }
-
     public function add_guru()
     {
         $this->form_validation->set_rules('nip', 'Nip', 'required|trim|min_length[4]', [
@@ -251,9 +208,264 @@ class Admin extends CI_Controller
             $this->db->insert('guru', $data);
 
             $this->session->set_flashdata('success-reg', 'Berhasil!');
-            redirect(base_url('admin/data_guru'));
+            redirect(base_url('admin/guru/data_guru'));
         }
     }
+
+
+    public function delete_guru($nip)
+    {
+        $this->load->model('m_guru');
+        $where = array('nip' => $nip);
+        $this->m_guru->delete_guru($where, 'guru');
+        $this->session->set_flashdata('user-delete', 'berhasil');
+        redirect('admin/guru/data_guru');
+    }
+
+    // manajemen orang tua
+    public function data_orangtua()
+    {
+        $this->load->model('m_orangtua');
+        $data['user'] = $this->db->get_where('admin', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['user'] = $this->m_orangtua->tampil_data()->result();
+        $this->load->view('admin/orangtua/data_orangtua', $data);
+    }
+
+    public function detail_orangtua($nip)
+    {
+        $this->load->model('m_orangtua');
+        $where = array('nip' => $nip);
+        $detail = $this->m_orangtua->detail_orangtua($nip);
+        $data['detail'] = $detail;
+        $this->load->view('admin/orangtua/detail_orangtua', $data);
+    }
+
+    public function update_orangtua($nip)
+    {
+        $this->load->model('m_orangtua');
+        $where = array('nip' => $nip);
+        $data['user'] = $this->m_orangtua->update_orangtua($where, 'orangtua')->result();
+        $this->load->view('admin/orangtua/update_orangtua', $data);
+    }
+
+    public function orangtua_edit()
+    {
+        $this->load->model('m_orangtua');
+        $nip = $this->input->post('nip');
+        $nama = $this->input->post('nama');
+        $email = $this->input->post('email');
+
+        $data = array(
+            'nip' => $nip,
+            'nama_orangtua' => $nama,
+            'email' => $email,
+
+        );
+
+        $where = array(
+            'nip' => $nip,
+        );
+
+        $this->m_orangtua->update_data($where, $data, 'orangtua');
+        $this->session->set_flashdata('success-edit', 'berhasil');
+        redirect('admin/orangtua/data_orangtua');
+    }
+    public function add_orangtua()
+    {
+        $this->form_validation->set_rules('nip', 'Nip', 'required|trim|min_length[4]', [
+            'required' => 'Harap isi kolom NIP.',
+            'min_length' => 'NIP terlalu pendek.',
+        ]);
+
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[orangtua.email]', [
+            'is_unique' => 'Email ini telah digunakan!',
+            'required' => 'Harap isi kolom email.',
+            'valid_email' => 'Masukan email yang valid.',
+        ]);
+
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[4]', [
+            'required' => 'Harap isi kolom nAMA.',
+            'min_length' => 'Nama terlalu pendek.',
+        ]);
+
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|matches[password2]', [
+            'required' => 'Harap isi kolom Password.',
+            'matches' => 'Password tidak sama!',
+            'min_length' => 'Password terlalu pendek',
+        ]);
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password]', [
+            'matches' => 'Password tidak sama!',
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('orangtua/registration');
+        } else {
+            $data = [
+                'nip' => htmlspecialchars($this->input->post('nip', true)),
+                'email' => htmlspecialchars($this->input->post('email', true)),
+                'nama_orangtua' => htmlspecialchars($this->input->post('nama', true)),
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'nama_mapel' => htmlspecialchars($this->input->post('mapel', true)),
+            ];
+
+            $this->db->insert('orangtua', $data);
+
+            $this->session->set_flashdata('success-reg', 'Berhasil!');
+            redirect(base_url('admin/orangtua/data_orangtua'));
+        }
+    }
+
+
+    public function delete_orangtua($nip)
+    {
+        $this->load->model('m_orangtua');
+        $where = array('nip' => $nip);
+        $this->m_orangtua->delete_orangtua($where, 'orangtua');
+        $this->session->set_flashdata('user-delete', 'berhasil');
+        redirect('admin/orangtua/data_orangtua');
+    }
+
+    // manajemen rektor
+
+    public function data_rektor()
+    {
+        $this->load->model('m_rektor');
+        $data['user'] = $this->db->get_where('admin', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['user'] = $this->m_rektor->tampil_data()->result();
+        $this->load->view('admin/rektor/data_rektor', $data);
+    }
+
+    public function detail_rektor($nip)
+    {
+        $this->load->model('m_rektor');
+        $where = array('nip' => $nip);
+        $detail = $this->m_rektor->detail_rektor($nip);
+        $data['detail'] = $detail;
+        $this->load->view('admin/rektor/detail_rektor', $data);
+    }
+
+    public function update_rektor($nip)
+    {
+        $this->load->model('m_rektor');
+        $where = array('nip' => $nip);
+        $data['user'] = $this->m_rektor->update_rektor($where, 'rektor')->result();
+        $this->load->view('admin/rektor/update_rektor', $data);
+    }
+
+    public function rektor_edit()
+    {
+        $this->load->model('m_rektor');
+        $nip = $this->input->post('nip');
+        $nama = $this->input->post('nama');
+        $email = $this->input->post('email');
+
+        $data = array(
+            'nip' => $nip,
+            'nama_rektor' => $nama,
+            'email' => $email,
+
+        );
+
+        $where = array(
+            'nip' => $nip,
+        );
+
+        $this->m_rektor->update_data($where, $data, 'rektor');
+        $this->session->set_flashdata('success-edit', 'berhasil');
+        redirect('admin/rektor/data_rektor');
+    }
+
+    public function delete_rektor($nip)
+    {
+        $this->load->model('m_rektor');
+        $where = array('nip' => $nip);
+        $this->m_rektor->delete_rektor($where, 'rektor');
+        $this->session->set_flashdata('user-delete', 'berhasil');
+        redirect('admin/rektor/data_rektor');
+    }
+
+    public function add_rektor()
+    {
+        $this->form_validation->set_rules('nip', 'Nip', 'required|trim|min_length[4]', [
+            'required' => 'Harap isi kolom NIP.',
+            'min_length' => 'NIP terlalu pendek.',
+        ]);
+
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[rektor.email]', [
+            'is_unique' => 'Email ini telah digunakan!',
+            'required' => 'Harap isi kolom email.',
+            'valid_email' => 'Masukan email yang valid.',
+        ]);
+
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[4]', [
+            'required' => 'Harap isi kolom nAMA.',
+            'min_length' => 'Nama terlalu pendek.',
+        ]);
+
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|matches[password2]', [
+            'required' => 'Harap isi kolom Password.',
+            'matches' => 'Password tidak sama!',
+            'min_length' => 'Password terlalu pendek',
+        ]);
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password]', [
+            'matches' => 'Password tidak sama!',
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('rektor/registration');
+        } else {
+            $data = [
+                'nip' => htmlspecialchars($this->input->post('nip', true)),
+                'email' => htmlspecialchars($this->input->post('email', true)),
+                'nama_rektor' => htmlspecialchars($this->input->post('nama', true)),
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+            ];
+
+            $this->db->insert('rektor', $data);
+
+            $this->session->set_flashdata('success-reg', 'Berhasil!');
+            redirect(base_url('admin/rektor/data_rektor'));
+        }
+    }
+
+
+    public function update_materi($id)
+    {
+        $this->load->model('m_materi');
+        $where = array('id' => $id);
+        $data['user'] = $this->m_materi->update_materi($where, 'materi')->result();
+        $this->load->view('admin/materi/update_materi', $data);
+    }
+
+    public function materi_edit()
+    {
+        $this->load->model('m_materi');
+
+        $id = $this->input->post('id');
+        $nama_guru = $this->input->post('nama_guru');
+        $nama_mapel = $this->input->post('nama_mapel');
+        $deskripsi = $this->input->post('deskripsi');
+
+        $data = array(
+            'nama_guru' => $nama_guru,
+            'nama_mapel' => $nama_mapel,
+            'deskripsi' => $deskripsi,
+
+        );
+
+        $where = array(
+            'id' => $id,
+        );
+
+        $this->m_materi->update_data($where, $data, 'materi');
+        $this->session->set_flashdata('success-edit', 'berhasil');
+        redirect('admin/materi/data_materi');
+    }
+
 
     //manajemen materi
 
@@ -262,10 +474,10 @@ class Admin extends CI_Controller
         $this->load->model('m_materi');
 
         $data['user'] = $this->db->get_where('admin', ['email' =>
-            $this->session->userdata('email')])->row_array();
+        $this->session->userdata('email')])->row_array();
 
         $data['user'] = $this->m_materi->tampil_data()->result();
-        $this->load->view('admin/data_materi', $data);
+        $this->load->view('admin/materi/data_materi', $data);
     }
 
     public function delete_materi($id)
@@ -274,7 +486,7 @@ class Admin extends CI_Controller
         $where = array('id' => $id);
         $this->m_materi->delete_materi($where, 'materi');
         $this->session->set_flashdata('user-delete', 'berhasil');
-        redirect('admin/data_materi');
+        redirect('admin/materi/data_materi');
     }
 
     public function tambah_materi()
@@ -284,7 +496,7 @@ class Admin extends CI_Controller
             'min_length' => 'deskripsi terlalu pendek.',
         ]);
         if ($this->form_validation->run() == false) {
-            $this->load->view('admin/add_materi');
+            $this->load->view('admin/materi/add_materi');
         } else {
             $upload_video = $_FILES['video'];
 
@@ -311,7 +523,7 @@ class Admin extends CI_Controller
 
             $this->db->insert('materi', $data);
             $this->session->set_flashdata('success-reg', 'Berhasil!');
-            redirect(base_url('admin/data_materi'));
+            redirect(base_url('admin/materi/data_materi'));
         }
     }
 }
