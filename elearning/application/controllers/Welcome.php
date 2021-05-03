@@ -6,9 +6,9 @@ class Welcome extends CI_Controller
 
     public function index()
     {
-      $this->load->view('template/nav');
-      $this->load->view('index');
-      $this->load->view('template/footer');
+        $this->load->view('template/nav2');
+        $this->load->view('index2');
+        $this->load->view('template/footer2');
     }
 
     public function validateLogin()
@@ -119,23 +119,23 @@ class Welcome extends CI_Controller
 
     public function tentang()
     {
-        $this->load->view('template/nav');
-        $this->load->view('tentang');
-        $this->load->view('template/footer');
+        $this->load->view('template/nav2');
+        $this->load->view('tentang2');
+        $this->load->view('template/footer2');
     }
 
     public function pelajaran()
     {
-        $this->load->view('template/nav');
-        $this->load->view('pelajaran');
-        $this->load->view('template/footer');
+        $this->load->view('template/nav2');
+        $this->load->view('pelajaran2');
+        $this->load->view('template/footer2');
     }
 
     public function kontak()
     {
-        $this->load->view('template/nav');
-        $this->load->view('kontak');
-        $this->load->view('template/footer');
+        $this->load->view('template/nav2');
+        $this->load->view('kontak2');
+        $this->load->view('template/footer2');
     }
 
     public function verify()
@@ -224,5 +224,4 @@ class Welcome extends CI_Controller
     {
         $this->load->view('template/email-template');
     }
-
 }
